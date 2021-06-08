@@ -20,7 +20,16 @@ const errorCtrl = document.createElement('span');
 errorCtrl.style.color = 'red';
 
 
-const getAgeByBirthday = birthday => new Date().getFullYear() - birthday.getFullYear();
+const getAgeByBirthday = birthday => {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+        age--;
+    
+    return age;
+}
 
 const addWarnClass = event => {
     event.target.classList.remove('btn-success');
@@ -33,12 +42,12 @@ const addSuccessClass = event => {
 }
 
 
-nameCtrl.addEventListener('mouseenter', () => {
+nameCtrl.addEventListener('focus', () => {
     nameOutputCtrl.textContent = 'Hello there! What\'s your name?';
     errorCtrl.textContent = '';
 });
 
-nameCtrl.addEventListener('mouseleave', () => {
+nameCtrl.addEventListener('blur', () => {
     if ( nameCtrl.value ) nameOutputCtrl.textContent = `Hi, ${nameCtrl.value}`
     else {
         errorCtrl.textContent = 'Please enter your name!';
@@ -46,12 +55,12 @@ nameCtrl.addEventListener('mouseleave', () => {
     }    
 });
 
-birthdayCtrl.addEventListener('mouseenter', () => {
+birthdayCtrl.addEventListener('focus', () => {
     ageOutputCtrl.textContent = 'Lemme guess, your age is...';
     errorCtrl.textContent = '';
 });
 
-birthdayCtrl.addEventListener('mouseleave', () => {
+birthdayCtrl.addEventListener('blur', () => {
     if ( birthdayCtrl.value ) 
         ageOutputCtrl.textContent = `Your age is ${getAgeByBirthday(new Date(birthdayCtrl.value))} years old!`
     else ageOutputCtrl.textContent = 'Would you mind entering your birthday?'; 

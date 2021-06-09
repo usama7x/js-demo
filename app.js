@@ -25,9 +25,9 @@ const getAgeByBirthday = birthday => {
     const birthDate = new Date(birthday);
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
         age--;
-    
+
     return age;
 }
 
@@ -43,6 +43,7 @@ const addSuccessClass = event => {
 
 
 nameCtrl.addEventListener('focus', () => {
+    if (nameCtrl.value) return;
     nameOutputCtrl.textContent = 'Hello there! What\'s your name?';
     errorCtrl.textContent = '';
 });
@@ -51,31 +52,32 @@ nameCtrl.addEventListener('blur', () => {
     if ( nameCtrl.value ) nameOutputCtrl.textContent = `Hi, ${nameCtrl.value}`
     else {
         errorCtrl.textContent = 'Please enter your name!';
-        nameCtrl.insertAdjacentElement('afterend', errorCtrl);        
-    }    
+        nameCtrl.insertAdjacentElement('afterend', errorCtrl);
+    }
 });
 
 birthdayCtrl.addEventListener('focus', () => {
+    if (birthdayCtrl.value) return;
     ageOutputCtrl.textContent = 'Lemme guess, your age is...';
     errorCtrl.textContent = '';
 });
 
 birthdayCtrl.addEventListener('blur', () => {
-    if ( birthdayCtrl.value ) 
+    if ( birthdayCtrl.value )
         ageOutputCtrl.textContent = `Your age is ${getAgeByBirthday(new Date(birthdayCtrl.value))} years old!`
-    else ageOutputCtrl.textContent = 'Would you mind entering your birthday?'; 
+    else ageOutputCtrl.textContent = 'Would you mind entering your birthday?';
 });
 
-lightThemeCtrl.addEventListener('click', () => {    
+lightThemeCtrl.addEventListener('click', () => {
     rightSection.classList.remove('bg-dark', 'text-white');
     rightSection.classList.add('bg-light', 'text-dark');
-    themeOutputCtrl.textContent = 'You Choose Light Mode!';    
+    themeOutputCtrl.textContent = 'You Choose Light Mode!';
 });
 
 darkThemeCtrl.addEventListener('click', () => {
     rightSection.classList.remove('bg-light', 'text-dark');
     rightSection.classList.add('bg-dark', 'text-white');
-    themeOutputCtrl.textContent = 'You Choose Dark Mode!';    
+    themeOutputCtrl.textContent = 'You Choose Dark Mode!';
 });
 
 skillSection.addEventListener('click', event => {
@@ -92,13 +94,13 @@ skillSection.addEventListener('click', event => {
 });
 
 skillOutputCtrl.addEventListener('click', event => {
-    const isButton = event.target.nodeName === 'BUTTON';    
+    const isButton = event.target.nodeName === 'BUTTON';
     if (isButton) {
         addSuccessClass(event);
         event.target.removeEventListener('mouseenter', addWarnClass);
         event.target.removeEventListener('mouseleave', addSuccessClass);
         event.target.style['marginLeft'] = '5px'
         skillSection.appendChild(event.target);
-    }  
+    }
 });
 
